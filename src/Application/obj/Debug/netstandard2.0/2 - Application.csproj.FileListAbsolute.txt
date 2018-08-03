@@ -1,0 +1,12 @@
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\bin\Debug\netstandard2.0\2 - Application.deps.json
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\bin\Debug\netstandard2.0\2 - Application.dll
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\bin\Debug\netstandard2.0\2 - Application.pdb
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\bin\Debug\netstandard2.0\4 - Domain.dll
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\bin\Debug\netstandard2.0\4 - Domain.pdb
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\obj\Debug\netstandard2.0\2 - Application.csprojAssemblyReference.cache
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\obj\Debug\netstandard2.0\2 - Application.csproj.CoreCompileInputs.cache
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\obj\Debug\netstandard2.0\2 - Application.AssemblyInfoInputs.cache
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\obj\Debug\netstandard2.0\2 - Application.AssemblyInfo.cs
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\obj\Debug\netstandard2.0\2 - Application.csproj.CopyComplete
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\obj\Debug\netstandard2.0\2 - Application.dll
+C:\Users\laert\Source\Repos\TesteLaerte\src\Application\obj\Debug\netstandard2.0\2 - Application.pdb
