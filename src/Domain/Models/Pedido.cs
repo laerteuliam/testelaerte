@@ -4,17 +4,13 @@ using System;
 
 namespace Domain.Models
 {
-    public class Pedido : IEntity
+    public class Pedido:IEntity
     {
-        public Pedido()
-        {
-            //Declarado somente p/ o EF.
-        }
         public int Id { get; private set; }
         public double ValorTotal { get; private set; }
         public Cliente Cliente { get; private set; }
         public DateTime DataPedido { get; private set; }
-       
+        
         public Pedido(int id, Cliente cliente, double valorTotal, DateTime dataPedido)
         {
             ValidarId(id);
@@ -30,7 +26,7 @@ namespace Domain.Models
             SetValorTotal(valorTotal);
             DataPedido = dataPedido;
         }
-
+        
         public void SetCliente(Cliente value)
         {
             Cliente = value;

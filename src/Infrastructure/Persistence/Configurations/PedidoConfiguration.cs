@@ -1,15 +1,12 @@
-﻿using Domain.Models;
+﻿using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure.Persistence.Configurations
 {
-    public class PedidoConfiguration : IEntityTypeConfiguration<Pedido>
+    class PedidoConfiguration : IEntityTypeConfiguration<PedidoEntity>
     {
-        public void Configure(EntityTypeBuilder<Pedido> builder)
+        public void Configure(EntityTypeBuilder<PedidoEntity> builder)
         {
             builder.HasKey(c => c.Id);
             builder.HasOne(c => c.Cliente).WithMany().IsRequired();

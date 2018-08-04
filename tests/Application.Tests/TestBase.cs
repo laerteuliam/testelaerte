@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using Bogus.Extensions.Brazil;
+using Infrastructure.Persistence.Entities;
 
 namespace Application.Tests
 {
@@ -25,13 +26,19 @@ namespace Application.Tests
         {
             try
             {
-                List<Pedido> pedidoFake = new Faker<Pedido>("pt_BR")
+                List<PedidoEntity> pedidoFake = new Faker<PedidoEntity>("pt_BR")
                     .CustomInstantiator(
-                        f => new Pedido(
-                            new Cliente(f.Person.FullName, 
-                            f.Person.Email 
-                            ,f.Person.Cpf())
-                            , f.Random.Double(1, 1000), f.Date.Recent(3)))
+                        f => new PedidoEntity
+                        {
+                            Cliente = new ClienteEntity
+                            {
+                                Cpf = f.Person.Cpf(),
+                                Email = f.Person.Email,
+                                Nome = f.Person.FullName
+                            },
+                            DataPedido = f.Date.Recent(3),
+                            ValorTotal = f.Random.Double(1, 1000)
+                        })
                         .Generate(5);
 
                 pedidoFake.ForEach(x => _dbInMemory.Add(x));

@@ -1,5 +1,5 @@
-﻿using Domain.Models;
-using Infrastructure.Persistence.Configurations;
+﻿using Infrastructure.Persistence.Configurations;
+using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -14,7 +14,7 @@ namespace Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new PedidoConfiguration());
         }
         
-        DbSet<Pedido> Pedidos { get; set; }
-        DbSet<Cliente> Clientes { get; set; }
+        DbSet<PedidoEntity> Pedidos { get; set; }
+        DbSet<ClienteEntity> Clientes { get; set; }
     }
 }

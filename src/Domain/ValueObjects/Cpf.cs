@@ -1,22 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Domain.Exceptions;
 
 namespace Domain.ValueObjects
 {
     public sealed class Cpf
     {
-        public Cpf()
-        {
-            //Apenas p/ o EF
-        }
-        public string Valor { get; private set; }
+        private readonly string _valor;
 
         public Cpf(string valor)
         {
             if (!Validar(valor)) throw new DomainException("CPF inválido.");
-            this.Valor = valor;
+            this._valor = LimparNaoNumericos(valor);
         }
-
+        
         public static implicit operator Cpf(string valor)
         {
             return new Cpf(valor);
@@ -24,7 +21,7 @@ namespace Domain.ValueObjects
 
         public static implicit operator string(Cpf cpf)
         {
-            return cpf.Valor;
+            return cpf._valor;
         }
         
         public bool Validar(string cpf)
@@ -74,6 +71,12 @@ namespace Domain.ValueObjects
             digito = digito + resto.ToString();
 
             return cpf.EndsWith(digito);
+        }
+
+        private static string LimparNaoNumericos(string valor)
+        {
+            Regex regex = new Regex(@"[^\d]");
+            return regex.Replace(valor, "");
         }
 
     }

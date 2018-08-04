@@ -3,9 +3,9 @@ using Domain.Models;
 
 namespace Api.Controllers.Pedidos
 {
-    public static class PedidoExtension
+    internal static class PedidoExtension
     {
-        public static Pedido ToEntity(this PedidoDto dto)
+        public static Pedido ToModel(this PedidoDto dto)
         {
             var cliente = new Cliente(dto.NomeCliente, dto.Email, dto.Cpf);
             return new Pedido(cliente,dto.ValorTotal,DateTime.Now);

@@ -5,16 +5,12 @@ namespace Domain.ValueObjects
 {
     public sealed class Email
     {
-        public Email()
-        {
-            //Apenas p/ o EF
-        }
-        public string Valor { get; private set; }
+        private readonly string _valor;
 
         public Email(string valor)
         {
             if (!Validar(valor)) throw new DomainException("Email inválido.");
-            this.Valor = valor;
+            this._valor = valor;
         }
 
         public static implicit operator Email(string valor)
@@ -24,7 +20,7 @@ namespace Domain.ValueObjects
 
         public static implicit operator string(Email email)
         {
-            return email.Valor;
+            return email._valor;
         }
 
         public bool Validar(string email)

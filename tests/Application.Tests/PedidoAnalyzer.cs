@@ -3,8 +3,10 @@ using Domain.Contracts;
 using Domain.Exceptions;
 using Domain.Models;
 using Infrastructure.Persistence;
+using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using Xunit;
 
 namespace Application.Tests
@@ -13,52 +15,54 @@ namespace Application.Tests
     {
 
         [Fact]
-        public async void GetPedido_PassValidId_ShouldBeReturnObject()
+        public void GetPedido_PassValidId_ShouldBeReturnObject()
         {
             IRepository<Pedido> repository = new PedidoRepository(_dbInMemory);
-            IService<Pedido> service = new PedidoService(repository);
-            Pedido model = await _dbInMemory.Set<Pedido>().AsNoTracking().LastAsync();
-            Pedido pedido = await service.GetByIdAsync(model.Id);
+            IClienteRepository clienteRepository = new ClienteRepository(_dbInMemory);
+            IService<Pedido> service = new PedidoService(repository,clienteRepository);
+            PedidoEntity entity = _dbInMemory.Set<PedidoEntity>().AsNoTracking().First();
+            Pedido pedido = service.GetById(entity.Id);
             Assert.True(pedido != null);
         }
 
         [Fact]
-        public async void GetPedido_PassInvalidId_ShouldBeThrowException()
+        public void GetPedido_PassInvalidId_ShouldBeThrowException()
         {
             IRepository<Pedido> repository = new PedidoRepository(_dbInMemory);
-            IService<Pedido> service = new PedidoService(repository);
-
-            await Assert.ThrowsAsync<InvalidOperationException>(
-                   () => service.GetByIdAsync(0));
+            IClienteRepository clienteRepository = new ClienteRepository(_dbInMemory);
+            IService<Pedido> service = new PedidoService(repository, clienteRepository);
+            Assert.Throws<InvalidOperationException>(() => service.GetById(0));
         }
 
         [Fact]
-        public async void AddPedido_PassValidInput_ShouldBeReturnSuccess()
+        public void AddPedido_PassValidInput_ShouldBeReturnSuccess()
         {
             IRepository<Pedido> repository = new PedidoRepository(_dbInMemory);
-            IService<Pedido> service = new PedidoService(repository);
+            IClienteRepository clienteRepository = new ClienteRepository(_dbInMemory);
+            IService<Pedido> service = new PedidoService(repository, clienteRepository);
 
             var cliente = new Cliente("Laerte", "laerte.uliam@gmail.com", "191.000.000-00");
 
             var pedido = new Pedido(cliente, 1000, DateTime.Now);
 
-            var output = await service.AddAsync(pedido);
+            var output = service.Add(pedido);
             Assert.True(output > 0);
         }
 
 
         [Fact]
-        public async void AddPedido_PassInvalidInput_ShouldBeThrowException()
+        public void AddPedido_PassInvalidInput_ShouldBeThrowException()
         {
             IRepository<Pedido> repository = new PedidoRepository(_dbInMemory);
-            IService<Pedido> service = new PedidoService(repository);
+            IClienteRepository clienteRepository = new ClienteRepository(_dbInMemory);
+            IService<Pedido> service = new PedidoService(repository, clienteRepository);
 
             try
             {
                 var cliente = new Cliente("Laerte", "laerte.uliam@gmail.com", "");
 
                 var pedido = new Pedido(cliente, 1000, DateTime.Now);
-                await service.AddAsync(pedido);
+                service.Add(pedido);
             }
             catch (DomainException ex)
             {
@@ -67,21 +71,21 @@ namespace Application.Tests
         }
 
         [Fact]
-        public async void UpdatePedido_PassValidInput_ShouldBeReturnSuccess()
+        public void UpdatePedido_PassValidInput_ShouldBeReturnSuccess()
         {
             IRepository<Pedido> repository = new PedidoRepository(_dbInMemory);
-            IService<Pedido> service = new PedidoService(repository);
+            IClienteRepository clienteRepository = new ClienteRepository(_dbInMemory);
+            IService<Pedido> service = new PedidoService(repository, clienteRepository);
 
-            Pedido pedidoToUpdate = await _dbInMemory.Set<Pedido>().AsNoTracking().LastAsync();
+            int idPedido = _dbInMemory.Set<PedidoEntity>().First().Id;
+            var pedidoToUpdate = service.GetById(idPedido);
 
-            var novoCliente = new Cliente("Laerte", "laerte.uliam@gmail.com", "19100000000");
-
-            pedidoToUpdate.SetCliente(novoCliente);
+            PedidoEntity entity = _dbInMemory.Set<PedidoEntity>().AsNoTracking().First();
             pedidoToUpdate.SetValorTotal(2000);
 
             try
             {
-                await service.UpdateAsync(pedidoToUpdate);
+                service.Update(idPedido, pedidoToUpdate);
             }
             catch (DomainException ex)
             {
@@ -90,28 +94,6 @@ namespace Application.Tests
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
-            }
-        }
-
-        [Fact]
-        public async void UpdatePedido_PassInvalidInput_ShouldBeThrowException()
-        {
-            IRepository<Pedido> repository = new PedidoRepository(_dbInMemory);
-            IService<Pedido> service = new PedidoService(repository);
-            Pedido pedidoToUpdate = await _dbInMemory.Set<Pedido>().AsNoTracking().LastAsync();
-
-            try
-            {
-                var novoCliente = new Cliente("Laerte", "laerte.uliam@gmail.com", "");
-
-                pedidoToUpdate.SetCliente(novoCliente);
-                pedidoToUpdate.SetValorTotal(2000);
-
-                await service.UpdateAsync(pedidoToUpdate);
-            }
-            catch (DomainException ex)
-            {
-                Assert.True(ex.BusinessMessage != "");
             }
         }
     }

@@ -17,34 +17,35 @@ namespace Api.Controllers.Pedidos
         }
         
         [HttpPost]
-        public async Task<IActionResult> PostAsync([FromBody]PedidoDto dto)
+        public IActionResult PostAsync([FromBody]PedidoDto pedidoDto)
         {
-            var pedido = dto.ToEntity();
-            var idPedido = await _service.AddAsync(pedido);
+            var pedido = pedidoDto.ToModel();
+            var idPedido = _service.Add(pedido);
             return Ok(idPedido);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(int id, [FromBody]PedidoDto dto)
+        public IActionResult PutAsync(int id, [FromBody]PedidoDto pedidoDto)
         {
-            var pedido = dto.ToEntity();
-            await _service.UpdateAsync(pedido);
+            var pedido = pedidoDto.ToModel();
+            _service.Update(id,pedido);
             return Ok();
         }
         
         [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        public IActionResult Get()
         {
-            List<Pedido> list = await _service.GetAsync();
-            List<PedidoViewModel> viewModel = list.ConvertAll(x => x.ToViewModel());
+            List<Pedido> list = _service.Get();
+            List<PedidoViewModel> viewModel = list
+                .ConvertAll(x=>x.ToViewModel());
             return Ok(viewModel);
         }
         
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByIdAsync(int id)
+        public IActionResult GetById(int id)
         {
-            Pedido pedido = await _service.GetByIdAsync(id);
+            Pedido pedido = _service.GetById(id);
             return Ok(pedido.ToViewModel());
         }
     }

@@ -182,9 +182,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\laert\\Source\\Repos\\TesteLaerte\\src\\Domain\\4 - Domain.csproj",
-      "projectName": "4 - Domain",
-      "projectPath": "C:\\Users\\laert\\Source\\Repos\\TesteLaerte\\src\\Domain\\4 - Domain.csproj",
+      "projectUniqueName": "C:\\Users\\laert\\Source\\Repos\\TesteLaerte\\src\\Domain\\Domain.csproj",
+      "projectName": "Domain",
+      "projectPath": "C:\\Users\\laert\\Source\\Repos\\TesteLaerte\\src\\Domain\\Domain.csproj",
       "packagesPath": "C:\\Users\\laert\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\laert\\Source\\Repos\\TesteLaerte\\src\\Domain\\obj\\",
       "projectStyle": "PackageReference",

@@ -13,30 +13,25 @@ namespace Application.Services
         {
             _repository = repository;
         }
-
-        public virtual Task<int> AddAsync(TEntity t)
+        
+        public virtual int Add(TEntity t)
         {
-            return  _repository.AddAsync(t);
+            return _repository.Add(t);
         }
 
-        public virtual Task DeleteAsync(int id)
+        public virtual List<TEntity> Get()
         {
-            return _repository.DeleteAsync(id);
+            return _repository.Get();
         }
-
-        public virtual Task<List<TEntity>> GetAsync()
+        
+        public virtual TEntity GetById(int id)
         {
-            return _repository.GetAsync();
+            return _repository.GetById(id);
         }
-
-        public virtual Task<TEntity> GetByIdAsync(int id)
+        
+        public virtual void Update(int id, TEntity t)
         {
-            return _repository.GetByIdAsync(id);
-        }
-
-        public virtual Task UpdateAsync(TEntity t)
-        {
-            return _repository.UpdateAsync(t);
+            _repository.Update(id, t);
         }
     }
 }

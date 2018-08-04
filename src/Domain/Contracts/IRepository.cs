@@ -7,10 +7,9 @@ namespace Domain.Contracts
     public interface IRepository<TEntity>
         where TEntity:IEntity
     {
-        Task<int> AddAsync(TEntity t);
-        Task UpdateAsync(TEntity t);
-        Task DeleteAsync(int id);
-        Task<List<TEntity>> GetAsync();
-        Task<TEntity> GetByIdAsync(int id);
+        int Add(TEntity t);
+        void Update(int id, TEntity t);
+        List<TEntity> Get();
+        TEntity GetById(int id);
     }
 }

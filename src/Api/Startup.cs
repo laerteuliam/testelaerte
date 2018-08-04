@@ -23,7 +23,8 @@ namespace Api
         }
 
         public IConfiguration Configuration { get; }
-        
+
+#region Startup Methods
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigCors(services);
@@ -33,10 +34,28 @@ namespace Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    PropertyNameHandling.CamelCase;
+            });
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseMvc();
+        }
+#endregion
+
+#region Config Methods
         private static void ConfigDependencies(IServiceCollection services)
         {
-            services.AddScoped(typeof(IRepository<Cliente>), typeof(ClienteRepository));
             services.AddScoped(typeof(IRepository<Pedido>), typeof(PedidoRepository));
+            services.AddScoped(typeof(IClienteRepository), typeof(ClienteRepository));
             services.AddScoped(typeof(IService<Pedido>), typeof(PedidoService));
         }
 
@@ -67,21 +86,7 @@ namespace Api
                     .AllowCredentials());
             });
         }
+        #endregion
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
-            {
-                settings.GeneratorSettings.DefaultPropertyNameHandling =
-                    PropertyNameHandling.CamelCase;
-            });
-        
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseMvc();
-        }
     }
 }
