@@ -9,7 +9,6 @@ namespace Application.Services
     public sealed class PedidoService : BaseService<Pedido>
     {
         private readonly IClienteRepository _clienteRepository;
-        private IRepository<Pedido> _repository;
         public PedidoService(IRepository<Pedido> repository, IClienteRepository clienteRepository) : base(repository){
             this._clienteRepository = clienteRepository;
         }
